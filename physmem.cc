@@ -10,6 +10,9 @@ using namespace std;
 
 const int BUFFERSIZE = 16 * 1024;
 
+const char * HEX_FORMAT = (sizeof(size_t) == 8) ? "%lx" : "%x";
+const char * DEC_FORMAT = (sizeof(size_t) == 8) ? "%lu" : "%u";
+
 vector<uint8_t> buf(BUFFERSIZE);
 
 int64_t get_chunk (const size_t addr, size_t num_bytes, FILE *outfile)
@@ -47,11 +50,11 @@ int main (int argc, char *argv[])
 	}
 
 	size_t address;
-	sscanf(argv[1], "%lx", &address);
+	sscanf(argv[1], HEX_FORMAT, &address);
 
 	size_t num_bytes = 4;
 	if (argc >= 3) {
-		sscanf(argv[2], "%lu", &num_bytes);
+		sscanf(argv[2], DEC_FORMAT, &num_bytes);
 	}
 
 	FILE *outfile = stdout;
