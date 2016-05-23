@@ -1,17 +1,20 @@
+/*
+**  Author: Brandon Smith
+**  Repo:   https://github.com/VectorCell/physmem
+*/
+
 #include <iostream>
 #include <vector>
-#include <string>
-#include <sstream>
 
 #include <cstdio>
 #include <cstdint>
 
 using namespace std;
 
-const int BUFFERSIZE = 16 * 1024;
+const char * const HEX_FORMAT = (sizeof(size_t) == 8) ? "%lx" : "%x";
+const char * const DEC_FORMAT = (sizeof(size_t) == 8) ? "%lu" : "%u";
 
-const char * HEX_FORMAT = (sizeof(size_t) == 8) ? "%lx" : "%x";
-const char * DEC_FORMAT = (sizeof(size_t) == 8) ? "%lu" : "%u";
+const int BUFFERSIZE = 16 * 1024;
 
 vector<uint8_t> buf(BUFFERSIZE);
 
