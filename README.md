@@ -16,4 +16,3 @@ Usage:  ./physmem ADDRESS [NUM_BYTES=4] [OUTPUT_FILE=stdout]
 | [ARMv6](bin/physmem-armv6l)  |
 | [ARMv7](bin/physmem-armv7l)  |
 
-Released into the public domain.
