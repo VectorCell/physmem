@@ -1,6 +1,6 @@
 # physmem
 
-Similar to devmem2 but allows for reading multiple words.
+Similar to devmem2, but allows for reading multiple words.
 
 ```
 Usage:  ./physmem ADDRESS [NUM_BYTES=4] [OUTPUT_FILE=stdout]
@@ -10,9 +10,12 @@ Usage:  ./physmem ADDRESS [NUM_BYTES=4] [OUTPUT_FILE=stdout]
 		OUTPUT_FILE: the file to dump memory contents to
 ```
 
-| Precompiled binaries         |
-|------------------------------|
-| [x86-64](bin/physmem-x86_64) |
-| [ARMv6](bin/physmem-armv6l)  |
-| [ARMv7](bin/physmem-armv7l)  |
+Designed for Linux, maybe works on BSD, and OS X with
+[modification](http://apple.stackexchange.com/questions/114319/how-to-access-dev-mem-in-osx).
+
+| Precompiled binaries               |
+|------------------------------------|
+| [Linux x86-64](bin/physmem-x86_64) |
+| [Linux ARMv6](bin/physmem-armv6l)  |
+| [Linux ARMv7](bin/physmem-armv7l)  |
 
