@@ -13,7 +13,6 @@ Usage:  ./physmem ADDRESS [NUM_BYTES=4] [OUTPUT_FILE=stdout]
 | Precompiled binaries         |
 |------------------------------|
 | [x86-64](bin/physmem-x86_64) |
-| [ARMv6](bin/physmem-arm6)    |
-| [ARMv7-A](bin/physmem-arm7)  |
-| [ARMv8-A](bin/physmem-arm8)  |
+| [ARMv6](bin/physmem-armv6l)  |
+| [ARMv7](bin/physmem-armv7l)  |
 
