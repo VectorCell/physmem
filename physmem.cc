@@ -8,75 +8,69 @@
 
 using namespace std;
 
-vector<uint8_t> buf(16 * 1024);
+const int BUFFERSIZE = 16 * 1024;
 
-size_t dec_to_int (string str)
-{
-	size_t x;
-	std::stringstream ss;
-	ss << << str;
-	ss >> x;
-	return x;
-}
+vector<uint8_t> buf(BUFFERSIZE);
 
-size_t hex_to_int (string str)
+int64_t get_chunk (const size_t addr, size_t num_bytes, FILE *outfile)
 {
-	size_t x;
-	std::stringstream ss;
-	ss << std::hex << str;
-	ss >> x;
-	return x;
-}
-
-int64_t output_chunk (void *addr, size_t num_bytes, FILE *outfile)
-{
+	void *buffer = (void *)&buf[0];
 	FILE *f = fopen("/dev/mem", "rb");
 	if (f) {
+		fseek(f, addr, SEEK_SET);
 		int64_t bytes_read = 0;
-		vector<uint8_t> buf(32 * 1024);
 		size_t count = 0;
-		while ((count = fread(&buf[0], sizeof(uint8_t), buf.size(), f)) > 0) {
+		while ((count = fread(buffer, sizeof(uint8_t), min(num_bytes, buf.size()), f)) > 0) {
 			bytes_read += count;
-			fwrite(&buf[0], sizeof(uint8_t), count, outfile);
+			num_bytes -= count;
+			fwrite(buffer, sizeof(uint8_t), count, outfile);
 		}
 		fclose(f);
 		return bytes_read;
 	} else {
-		return -1;
+		cerr << "ERROR: must be run with root privileges" << endl;
+		exit(1);
 	}
 }
 
 int main (int argc, char *argv[])
 {
 	if (argc < 2) {
-		cerr << "Usage: physmem ADDRESS [NUM_BYTES=4] [OUTPUT_FILE=stdout]" << endl;
+		cerr << endl;
+		cerr << "Usage:  " << argv[0] << " ADDRESS [NUM_BYTES=4] [OUTPUT_FILE=stdout]" << endl;
+		cerr << endl;
+		cerr << "        ADDRESS:     memory address to being read (hex address)" << endl;
+		cerr << "        NUM_BYTES:   the number of bytes to read (decimal integer)" << endl;
+		cerr << "        OUTPUT_FILE: the file to dump memory contents to" << endl;
+		cerr << endl;
 		return EXIT_FAILURE;
 	}
 
-	string addr_str(argv[1]);
-	size_t address = hex_to_int(addr_str);
-	cerr << "address: " << std::hex << address << endl;
+	size_t address;
+	sscanf(argv[1], "%lx", &address);
 
 	size_t num_bytes = 4;
 	if (argc >= 3) {
-		string num_bytes_str(argv[2]);
-		num_bytes = dec_to_int(num_bytes_str);
+		sscanf(argv[2], "%lu", &num_bytes);
 	}
 
 	FILE *outfile = stdout;
 	if (argc >= 4) {
 		outfile = fopen(argv[3], "wb");
 		if (outfile == NULL) {
-			cerr << "ERROR: unable to open " << argv[3] << endl;
+			cerr << "ERROR: unable to write to " << argv[3] << endl;
 			return EXIT_FAILURE;
 		}
 	}
-	
+
 	int64_t bytes_read = 0;
 	do {
-		bytes_read = output_chunk((void*)address, stdout);
-		//fprintf(stderr, "read %ld bytes at address %lx\n", bytes_read, address);
+		bytes_read = get_chunk(address, num_bytes, stdout);
+		num_bytes -= bytes_read;
 		address += bytes_read;
 	} while (bytes_read > 0);
+
+	fclose(outfile);
+
 	return EXIT_SUCCESS;
 }

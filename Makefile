@@ -9,9 +9,11 @@ all : physmem
 
 physmem : physmem.cc
 	$(CXX) $(CPPFLAGS) -o physmem physmem.cc $(LIBFLAGS)
+	cp physmem bin/physmem-$(shell lscpu | grep Architecture | awk '{print $$2}')
 
 test : all
-	sudo ./physmem 0x00000000 | hexdump
+	./physmem | cat
+	sudo ./physmem 0xd0000000 256 | hexdump
 
 clean :
 	rm -f *.d
