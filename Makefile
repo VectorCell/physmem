@@ -11,7 +11,7 @@ physmem : physmem.cc
 	$(CXX) $(CPPFLAGS) -o physmem physmem.cc $(LIBFLAGS)
 
 test : all
-	./physmem 0x00000000
+	sudo ./physmem 0x00000000 | hexdump
 
 clean :
 	rm -f *.d
