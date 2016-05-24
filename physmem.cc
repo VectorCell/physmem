@@ -45,7 +45,7 @@ int main (int argc, char *argv[])
 		cerr << endl;
 		cerr << "Usage:  " << argv[0] << " ADDRESS [NUM_BYTES=4] [OUTPUT_FILE=stdout]" << endl;
 		cerr << endl;
-		cerr << "        ADDRESS:     memory address to being read (hex address)" << endl;
+		cerr << "        ADDRESS:     memory address to be read (hex address)" << endl;
 		cerr << "        NUM_BYTES:   the number of bytes to read (decimal integer)" << endl;
 		cerr << "        OUTPUT_FILE: the file to dump memory contents to" << endl;
 		cerr << endl;
