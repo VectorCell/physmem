@@ -305,7 +305,6 @@ args_type parse_args(int argc, char *argv[])
 		cerr << "        FILE:      Where to read to, or write from." << endl;
 		cerr << "                   The default in/out is stdin/stdout." << endl;
 		cerr << endl;
-		cerr << endl;
 		exit(0);
 	}
 
