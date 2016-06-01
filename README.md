@@ -3,11 +3,21 @@
 Similar to devmem2, but allows for reading multiple words.
 
 ```
-Usage:  ./physmem ADDRESS [NUM_BYTES=4] [OUTPUT_FILE=stdout]
+Usage:  ./physmem MODE ADDRESS [-f FILE] [-n NUM_BYTES]
 
-		ADDRESS:     memory address to be read (hex address)
-		NUM_BYTES:   the number of bytes to read (decimal integer)
-		OUTPUT_FILE: the file to dump memory contents to
+        MODE:      The physmem operating mode, either r or w.
+
+        ADDRESS:   The memory address to be read/written (hex address).
+
+        NUM_BYTES: The number of bytes to read (decimal integer).
+                   For read mode, the default value is the word size
+                   on the current machine. This is 4 for 32-bit machines,
+                   or 8 for 64-bit machines.
+                   For write mode, this defaults to the size of the
+                   input file.
+
+        FILE:      Where to read to, or write from.
+                   The default in/out is stdin/stdout.
 ```
 
 Designed for Linux, maybe works on BSD, and OS X with
