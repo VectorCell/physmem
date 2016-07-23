@@ -14,8 +14,8 @@
 
 using namespace std;
 
-const char * const HEX_FORMAT = (sizeof(uintptr_t) == 8) ? "%lx" : "%x";
-const char * const DEC_FORMAT = (sizeof(uintptr_t) == 8) ? "%lu" : "%u";
+const char * const HEX_FORMAT = (sizeof(uintptr_t) > sizeof(int)) ? "%lx" : "%x";
+const char * const DEC_FORMAT = (sizeof(uintptr_t) > sizeof(int)) ? "%lu" : "%u";
 const char * const DASH = "-";
 
 const size_t BUFFERSIZE = 16 * 1024;
