@@ -186,9 +186,9 @@ args_type parse_args(int argc, char *argv[])
 			addr_str += 2;
 		}
 		if (sizeof(uintptr_t) == sizeof(unsigned int)) {
-			sscanf(addr_str, "%x", &(unsigned int)args.address);
+			sscanf(addr_str, "%x", (unsigned int *)&args.address);
 		} else if (sizeof(uintptr_t) == sizeof(unsigned long)) {
-			sscanf(addr_str, "%lx", &(unsigned long)args.address);
+			sscanf(addr_str, "%lx", (unsigned long *)&args.address);
 		} else {
 			cerr << "This is strange" << endl;
 			cerr << "A uintptr_t is " << sizeof(uintptr_t) << " bytes." << endl;
@@ -229,9 +229,9 @@ args_type parse_args(int argc, char *argv[])
 		}
 	} else {
 		if (sizeof(uintptr_t) == sizeof(unsigned int)) {
-			sscanf(n_bytes_str, "%u", &(unsigned int)args.num_bytes);
+			sscanf(n_bytes_str, "%u", (unsigned int *)&args.num_bytes);
 		} else if (sizeof(uintptr_t) == sizeof(unsigned long)) {
-			sscanf(n_bytes_str, "%lu", &(unsigned long)args.num_bytes);
+			sscanf(n_bytes_str, "%lu", (unsigned long *)&args.num_bytes);
 		} else {
 			cerr << "This is strange" << endl;
 			cerr << "A uintptr_t is " << sizeof(uintptr_t) << " bytes." << endl;
