@@ -21,6 +21,7 @@ physmem : physmem.cc
 test : all
 	./physmem | cat
 	sudo ./physmem r 0xd0000000 -n 256 | hexdump
+	sudo ./physmem r 0xd0000000 -n 25600 | hexdump
 
 clean :
 	rm -f *.d
