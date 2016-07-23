@@ -14,7 +14,6 @@
 
 using namespace std;
 
-const char * const HEX_FORMAT = (sizeof(uintptr_t) > sizeof(int)) ? "%lx" : "%x";
 const char * const DEC_FORMAT = (sizeof(uintptr_t) > sizeof(int)) ? "%lu" : "%u";
 const char * const DASH = "-";
 
@@ -186,7 +185,16 @@ args_type parse_args(int argc, char *argv[])
 		if (addr_str[0] == '0' && addr_str[1] == 'x') {
 			addr_str += 2;
 		}
-		sscanf(addr_str, HEX_FORMAT, &args.address);
+		if (sizeof(uintptr_t) == sizeof(unsigned int)) {
+			sscanf(addr_str, "%x", &(unsigned int)args.address);
+		} else if (sizeof(uintptr_t) == sizeof(unsigned long)) {
+			sscanf(addr_str, "%lx", &(unsigned long)args.address);
+		} else {
+			cerr << "This is strange" << endl;
+			cerr << "A uintptr_t is " << sizeof(uintptr_t) << " bytes." << endl;
+			cerr << "A int is " << sizeof(int) << " bytes." << endl;
+			cerr << "A long is " << sizeof(long) << " bytes." << endl;
+		}
 	}
 
 	// interpret filename
@@ -220,7 +228,16 @@ args_type parse_args(int argc, char *argv[])
 
 		}
 	} else {
-		sscanf(n_bytes_str, DEC_FORMAT, &args.num_bytes);
+		if (sizeof(uintptr_t) == sizeof(unsigned int)) {
+			sscanf(n_bytes_str, "%u", &(unsigned int)args.num_bytes);
+		} else if (sizeof(uintptr_t) == sizeof(unsigned long)) {
+			sscanf(n_bytes_str, "%lu", &(unsigned long)args.num_bytes);
+		} else {
+			cerr << "This is strange" << endl;
+			cerr << "A uintptr_t is " << sizeof(uintptr_t) << " bytes." << endl;
+			cerr << "A int is " << sizeof(int) << " bytes." << endl;
+			cerr << "A long is " << sizeof(long) << " bytes." << endl;
+		}
 		if (args.num_bytes == 0) {
 			cout << "ERROR: can't write 0 bytes, what does that mean?" << endl;
 			exit(1);
